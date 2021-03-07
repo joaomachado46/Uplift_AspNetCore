@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Uplift.DataModels\Uplift.DataModels.csproj" />
     <ProjectReference Include="..\Uplift.Library.DataAccess\Uplift.DataAccess.csproj" />
     <ProjectReference Include="..\Uplift.Utility\Uplift.Utility.csproj" />

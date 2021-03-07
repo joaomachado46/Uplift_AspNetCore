@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Uplift.DataModels;
 
 namespace Uplift.DataAccess.Data
 {
@@ -12,5 +13,7 @@ namespace Uplift.DataAccess.Data
             : base(options)
         {
         }
+
+        public DbSet<Category> Categorys { get; set; }
     }
 }
