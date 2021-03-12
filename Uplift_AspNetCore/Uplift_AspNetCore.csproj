@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Uplift.Utility\Uplift.Utility.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\services\" />
+  </ItemGroup>
+
 </Project>

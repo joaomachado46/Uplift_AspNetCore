@@ -4,8 +4,11 @@ $(document).ready(function () {
     loadDataTable();
 });
 
+/*PARA USAR O DATABLE https://datatables.net/ TEM QUE SE FAZER ESTA FUNÇÃO, ONDE QUANDO
+ A PAGINA CARREGAR, VAI CLASS A API PARA IR BUSCAR OS DADOS E DEPOIS CARREGAR NO BODY DA TABELA
+ ESSES DADOS. DEPOIS DISSO NO RENDER DEFINIMOS OS BUTOES PARA CREATE E DELETE 1º VAI CHAMAR UMA METODO DO CONTROLLER O 
+ 2º DE DELETE VAI CHAMAR OUTRA FUNÇÃO DELETE(declarada em baixo) E PASSA COMO PARAMETRO A URL(para o controller/action)*/
 function loadDataTable() {
-    
     dataTable = $('#tblData').DataTable({
         "ajax": {
             "url": "/admin/category/GetAll",
@@ -20,11 +23,10 @@ function loadDataTable() {
                 "render": function (data) {
                     return `<div class="text-center">
                                 <a href="/Admin/category/Upsert/${data}" class='btn btn-success text-white' style='cursor:pointer; width:100px;'>
-                                    <i class='far fa-edit'></i> Edit
+                                    <i class='fas fa-edit'></i> Edit
                                 </a>
                                 &nbsp;
-                                <a onclick=Delete("/Admin/category/Delete/${data}") class='btn btn-danger text-white' style='cursor:pointer; width:100px;'>
-                                    <i class='far fa-trash-alt'></i> Delete
+                                <a onclick=Delete("/Admin/category/Delete/${data}") class='btn btn-danger text-white' style='cursor:pointer; width:100px;'><i class='fas fa-trash-alt'></i> Delete
                                 </a>
                             </div>
                             `;
@@ -32,15 +34,18 @@ function loadDataTable() {
             }
         ],
         "language": {
-            "emptyTable":"No records found."
+            "emptyTable": "No records found."
         },
-        "width":"100%"
+        "width": "100%"
     });
 }
 
+/* ESTA FUNÇÃO É CHAMADA NO BOTAO CRIADO EM CIMA, PARA A TABELA 
+ ESTA FUNÇÃO USA O SWEATALERT, PARA CRIAR ALERTAS MAIS INTERETATIVOS PARA O USUARIO, https://sweetalert.js.org/guides/ */
+
 function Delete(url) {
     swal({
-        title: "Are you sure you want to delete?",
+        title: "Are you sure tou want to delete?",
         text: "You will not be able to restore the content!",
         type: "warning",
         showCancelButton: true,
@@ -57,7 +62,7 @@ function Delete(url) {
                     dataTable.ajax.reload();
                 }
                 else {
-                    toastr.error(data.message);
+                    toastr.error(data.message)
                 }
             }
         });

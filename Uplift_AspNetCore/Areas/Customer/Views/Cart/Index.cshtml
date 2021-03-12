@@ -1,0 +1,65 @@
+﻿@model Uplift.DataModels.ViewModels.CartVM
+@{
+    ViewData["Title"] = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-primary">
+    <h1>@ViewData["Title"]</h1>
+</div>
+<br />
+<form method="post">
+    <div class="container backgroundWhite">
+        <div class="card">
+            <div class="card-header bg-dark text-light ml-0 row container">
+                <div class="col-12 d-none d-md-block col-md-6 pb-1">
+                    <i class="fas fa-shopping-cart"></i> &nbsp; Shopping Cart
+                </div>
+                <div class="col-12 col-md-4 offset-md-2 text-right">
+                    <a asp-action="Index" asp-controller="Home" asp-area="Customer" class="btn btn-outline-info form-control btn-sm">Shopping Cart</a>
+                </div>
+            </div>
+            @if (Model.ServiceList.Count > 0)
+            {
+                <div class="card-body backgroundWhite">
+                    @{ var countTotalPrice = 0.0; }
+                    @foreach (var item in Model.ServiceList)
+                    {
+                        <div class="row" style="color:black">
+                            <div class="d-none d-md-block col-md-2 text-center py-2">
+                                <img src="@item.ImageUrl" class="rounded" width="100%" alt="Alternate Text" />
+                            </div>
+                            <div class="col-12 col-md-5 text-md-left pt-3">
+                                <h5 class="text-primary">@item.Name</h5>
+                                <h5>€ @item.Price</h5>
+                                <p>@item.Frequency.Name</p>
+                            </div>
+                            <div class="col-12 col-md-5 row pt-3">
+                                <div class="col-6 text-md-right" style="padding-top:5px;">
+                                    <h5><strong>€ @((item.Price * item.Frequency.FrequencyCount))</strong></h5>
+                                </div>
+
+                                <div class="col-6 text-right">
+                                    <button type="submit" asp-action="Remove" asp-area="Customer" asp-controller="Cart" asp-route-id="@item.Id" class="btn-outline-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        countTotalPrice += (item.Price * item.Frequency.FrequencyCount);
+                    }
+                    <br />
+                    <hr />
+                    <div class="col-12 text-right">
+                        <h4 class="text-success">Total (€): @countTotalPrice</h4>
+                    </div>
+
+                </div>
+                <div class="text-right col-12 pb-3">
+                    <a type="submit" asp-action="Summary" asp-area="Customer" asp-controller="Cart" class="btn btn-success" style="width:30%">Summary</a>
+                </div>
+            }
+        </div>
+    </div>
+
+</form>

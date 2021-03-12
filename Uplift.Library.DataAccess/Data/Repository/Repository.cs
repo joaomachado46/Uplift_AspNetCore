@@ -12,13 +12,14 @@ namespace Uplift.DataAccess.Data.Repository
     public class Repository<T> : IRepository<T> where T : class
     {
 
-        protected readonly DbContext Context;
+        protected readonly DbContext _context;
+        //ESTA PROP VAI RECEBER O CONTEXTO CORRENTE, TEM QUE SER INICIADA NO CONTRUTOR
         internal DbSet<T> dbSet;
 
         public Repository(DbContext context)
         {
-            Context = context;
-            dbSet = Context.Set<T>();
+            _context = context;
+            dbSet = _context.Set<T>();
         }
         //ADICIONAR UM OBJETO NA BD
         public void Add(T entity)

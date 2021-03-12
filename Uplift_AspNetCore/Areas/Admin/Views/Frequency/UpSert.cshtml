@@ -1,0 +1,54 @@
+﻿@model Uplift.DataModels.Frequency
+@{
+    ViewData["Title"] = "Create Frequency";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<br />
+<form asp-action="UpSert" method="post">
+    @if (Model.Id != 0)
+    {
+        <input asp-for="Id" type="hidden" />
+        ViewData["Title"] = "Edit Frequency";
+    }
+    <div class="text-primary">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+    <br />
+    <div class="col-8">
+        <div class="form-row">
+            <div class="col-4">
+                <label asp-for="Name">Frequency Name</label>
+            </div>
+            <div class="col-8">
+                <input type="text" asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+        <div class="form-row">
+            <div class="col-4">
+                <label asp-for="FrequencyCount">Frequency count</label>
+            </div>
+            <div class="col-8">
+                <input asp-for="FrequencyCount" type="number" value="0" class="form-control" />
+                <span asp-validation-for="FrequencyCount" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+        <div class="form-group row">
+            <div class="col-8 offset-4">
+                @if (Model.Id != 0)
+                {
+                    <partial name="_updateAndBackToList" model="Model.Id" />
+                }
+                else
+                {
+                    <partial name="_createAndBackToList" />
+                }
+            </div>
+        </div>
+    </div>
+</form>
+

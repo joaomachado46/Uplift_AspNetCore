@@ -1,0 +1,78 @@
+﻿@model Uplift.DataModels.Service
+@using Uplift.Utility
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor httpContextAccessor
+@using Uplift_AspNetCore.Extensions
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="container backgroundWhite">
+    <div class="card row">
+        <div class="row card-body col-12">
+            <div class="text-success col-6">
+                <h3>@Model.Name</h3>
+            </div>
+            <div class="text-right col-6">
+                <h3>Total: € @((Model.Price * @Model.Frequency.FrequencyCount))</h3>
+            </div>
+        </div>
+        <div class="backgroundWhite card-body" style="color:black">
+            <div class="row">
+                <div class="col-12 col-lg-8">
+                    <div class="row">
+                        <div class="col-12">
+                            <h5>Price per Service: € @Model.Price</h5>
+
+                            <div>
+                                <p>@Model.Frequency.Name</p>
+                            </div>
+                            <div>
+                                <p class="pr-3 pl-3">
+                                    é ampla e ainda aberta a uma definição mais precisa. Grosso modo, pode ser entendido como manifestação linguística das ideias de um autor, que serão interpretadas pelo leitor de acordo com seus conhecimentos linguísticos e culturais. Seu tamanho é variável.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 text-center">
+                    <img src="@Model.ImageUrl" alt="Alternate Text" style="width:100%" />
+                </div>
+            </div>
+        </div>
+        <div class="col-12 pb-3">
+            <div class="row">
+                <div class="col-6">
+                    <a asp-action="Index" class="btn btn-success" style="width:100%; border-radius:2px">Back to List</a>
+                </div>
+                <div class="col-6">
+                    @{
+
+                        var cartEnable = true;
+                        if (httpContextAccessor.HttpContext.Session.GetObject<List<int>>(SD.SessionCart) != null)
+                        {
+                            var ResultList = httpContextAccessor.HttpContext.Session.GetObject<List<int>>(SD.SessionCart);
+                            if (ResultList.Contains(Model.Id))
+                            {
+                                cartEnable = false;
+                            }
+                        }
+                        if (cartEnable)
+                        {
+                            <a asp-action="AddCart" class="btn btn-primary" asp-route-serviceId="@Model.Id" style="width:100%; border-radius:2px">Add to Cart</a>
+                        }
+                        else
+                        {
+                            <button class="btn btn-primary" disabled style="width:100%; border-radius:2px">Item already in Cart</button>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

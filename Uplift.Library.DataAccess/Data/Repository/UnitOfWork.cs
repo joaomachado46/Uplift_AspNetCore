@@ -12,9 +12,19 @@ namespace Uplift.DataAccess.Data.Repository
         {
             _context = context;
             Category = new CategoryRepository(context);
+            Frequency = new FrequencyRepository(context);
+            Service = new ServiceRepository(context);
+            OrderHeader = new OrderHeaderRepository(context);
+            OrderDetails = new OrderDetailsRepository(context);
+            User = new UserRepository(context);
         }
-        //ODAS AS CLASS COM REPOSITORY TEM QUE ENTRAR UMA REFERENCIA AQUI E DEPOIS NO CONSTRUTOR RECEVER UMA NOVA INSTANCIA DO SEU REPOSITORIO.
+        //TODAS AS CLASS COM REPOSITORY TEM QUE ENTRAR UMA REFERENCIA AQUI E DEPOIS NO CONSTRUTOR RECEVER UMA NOVA INSTANCIA DO SEU REPOSITORIO.
         public ICategoryRepository Category { get; private set; }
+        public IFrequencyRepository Frequency { get; private set; }
+        public IServiceRepository Service { get; private set; }
+        public IOrderHeaderRepository OrderHeader { get; private set; }
+        public IOrderDetailsRepository OrderDetails { get; private set; }
+        public IUserRepository User { get; private set; }
 
         public void Dispose()
         {

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using Uplift.DataAccess.Data;
 using Uplift.DataAccess.Data.Repository;
 using Uplift.DataAccess.Data.Repository.IRepos;
@@ -39,6 +40,7 @@ namespace Uplift_AspNetCore
                 .AddDefaultTokenProviders();
 
             services.AddSingleton<IEmailSender, EmailSender>();
+           
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -48,7 +50,15 @@ namespace Uplift_AspNetCore
             });
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            
+            services.AddScoped<ApplicationDbContext>();
+
+            services.AddSession(Options =>
+            {
+                Options.IdleTimeout = TimeSpan.FromMinutes(30);
+                Options.Cookie.HttpOnly = true;
+                Options.Cookie.IsEssential = true;
+            });
+
             services.AddControllersWithViews().AddNewtonsoftJson().AddRazorRuntimeCompilation();
             services.AddRazorPages();
         }
@@ -69,6 +79,9 @@ namespace Uplift_AspNetCore
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            //NECESSARIO PARA USAR A SESSION CONFIGURATION
+            app.UseSession();
 
             app.UseRouting();
 

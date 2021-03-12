@@ -1,0 +1,130 @@
+﻿@model Uplift.DataModels.ViewModels.CartVM
+@{
+    ViewData["Title"] = "Summary Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-primary">
+    <h1>@ViewData["Title"]</h1>
+</div>
+<br />
+
+<div class="container backgroundWhite">
+    <div class="card">
+        <div class="card-header bg-dark text-light ml-0 row container">
+            <div class="col-12 d-none d-md-block col-md-6 pb-1">
+                <i class="fas fa-shopping-cart"></i> &nbsp; Summary Cart
+            </div>
+            <div class="col-12 col-md-4 offset-md-2 text-right">
+                <a asp-action="Index" asp-controller="Home" asp-area="Customer" class="btn btn-outline-info form-control btn-sm">Shopping Cart</a>
+            </div>
+        </div>
+
+        <form method="post">
+            <div class="card-body backgroundWhite">
+                <div class="container rounded p-2">
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="col-12 col-lg-6 pb-4" style="color:black">
+                            <h3 class="text-primary">PickUp Details:</h3>
+                            <br />
+                            <div class="row pb-2">
+                                <div class="col-3">
+                                    <label asp-for="@Model.OrderHeaders.Name"></label>
+                                </div>
+                                <div class="col-9">
+                                    <input type="text" asp-for="@Model.OrderHeaders.Name" class="form-control" />
+                                    <span asp-validation-for="@Model.OrderHeaders.Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row pb-2">
+                                <div class="col-3">
+                                    <label asp-for="@Model.OrderHeaders.PhoneNumber"></label>
+                                </div>
+                                <div class="col-9">
+                                    <input type="text" asp-for="@Model.OrderHeaders.PhoneNumber" class="form-control" />
+                                    <span asp-validation-for="@Model.OrderHeaders.PhoneNumber" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row pb-2">
+                                <div class="col-3">
+                                    <label asp-for="@Model.OrderHeaders.Address"></label>
+                                </div>
+                                <div class="col-9">
+                                    <input type="text" asp-for="@Model.OrderHeaders.Address" class="form-control" />
+                                    <span asp-validation-for="@Model.OrderHeaders.Address" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row pb-2">
+                                <div class="col-3">
+                                    <label asp-for="@Model.OrderHeaders.City"></label>
+                                </div>
+                                <div class="col-9">
+                                    <input type="text" asp-for="@Model.OrderHeaders.City" class="form-control" />
+                                    <span asp-validation-for="@Model.OrderHeaders.City" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row pb-2">
+                                <div class="col-3">
+                                    <label asp-for="@Model.OrderHeaders.ZipCode"></label>
+                                </div>
+                                <div class="col-9">
+                                    <input type="text" asp-for="@Model.OrderHeaders.ZipCode" class="form-control" />
+                                    <span asp-validation-for="@Model.OrderHeaders.ZipCode" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row pb-2">
+                                <div class="col-3">
+                                    <label asp-for="@Model.OrderHeaders.Email"></label>
+                                </div>
+                                <div class="col-9">
+                                    <input type="text" asp-for="@Model.OrderHeaders.Email" class="form-control" />
+                                    <span asp-validation-for="@Model.OrderHeaders.Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-5 offset-lg-1">
+                            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-primary">Order Summary</span>
+                            </h4>
+                            <ul class="list-group mb-3">
+                                @{
+                                    var total = 0.0;
+                                    var totalFinal = 0.0;
+                                }
+
+                                @foreach (var details in Model.ServiceList)
+                                {
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <div>
+                                            <input type="hidden" asp-for="@details.Id" />
+                                            <h6 class="my-0">@details.Name</h6>
+                                            <small class="text-muted">Frequency : @details.Frequency.FrequencyCount</small>
+                                        </div>
+
+                                        @{
+                                            total = (details.Price * details.Frequency.FrequencyCount);
+                                            totalFinal += total;
+                                        }
+                                        <h6 class="text-right">€ @total</h6>
+                                    </li>
+                                }
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <div>
+                                        <small class="text-muted">Total (€)</small>
+                                    </div>
+                                    <h6 class="text-right">€ @totalFinal</h6>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-right col-12 pb-3">
+                <button type="submit" class="btn btn-success form-control" style="width:30%">Place Order</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
